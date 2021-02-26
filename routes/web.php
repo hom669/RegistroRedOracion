@@ -21,6 +21,14 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::resource('encuentro','App\Http\Controllers\RegisterEncuentroController');
+Route::post('encuentro/store', 'App\Http\Controllers\RegisterEncuentroController@store');
+Route::get('encuentro/edit/{id}', 'App\Http\Controllers\RegisterEncuentroController@edit');
+Route::get('encuentro/confirmdestroy/{id}', 'App\Http\Controllers\RegisterEncuentroController@confirmdestroy');
+Route::get('encuentro/destroy/{id}', 'App\Http\Controllers\RegisterEncuentroController@destroy');
+Route::post('encuentro/update/{id}', 'App\Http\Controllers\RegisterEncuentroController@update');
+Route::get('encuentro/update/{id}', 'App\Http\Controllers\RegisterEncuentroController@update');
+
 Route::resource('monitor','App\Http\Controllers\MonitorController');
 Route::post('monitor/store', 'App\Http\Controllers\MonitorController@store');
 Route::get('monitor/edit/{id}', 'App\Http\Controllers\MonitorController@edit');

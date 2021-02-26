@@ -13,7 +13,7 @@ class registerOld extends Model
     protected $primaryKey = 'idregisterold';
     protected $keyType = 'integer';
 
-    protected $fillable = ['idmonitor', 'name_lastname','telephones','age','date_birthday','church','idplace','ministery','time_converted','idtipotiempo','franja','email'];
+    protected $fillable = ['idmonitor', 'name_lastname','telephones','age','date_birthday','church','idplace','ministery','time_converted','idtipotiempo','franja','email','idencuentro'];
 
     public function getAuthIdentifier()
     {

@@ -3,56 +3,35 @@
 @section('title', 'Registros Antiguos Red Oración')
 
 @section('content_header')
-    <h1>Administracion de Registros Antiguos</h1>
+    <h1>Administracion de Registros Monitores Red de Oración</h1>
 @stop
 <?php //dd($registrosold);?>
 @section('content')
-<a href="registerOld\create" class="btn btn-success">Crear Nuevo Registro Antiguos</a><br><br>
+<a href="encuentro\create" class="btn btn-success">Crear Nuevo Monitor de Oración</a><br><br>
 <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
         <thead>
             <tr>
                 <th>N°</th>
-                <th>Monitor de Oración</th>
-                <th>Nombres y Apellidos</th>
-                <th>Telefonos</th>
-                <th>Edad</th>
-                <th>Fecha Nacimiento</th>
-                <th>Iglesia</th>
-                <th>Lugar</th>
-                <th>Ministerio</th>
-                <th>Tiempo Convertido</th>
-                <th>Franja</th>
-                <th>Correo Electronico</th>
-                <th>Encuentro de Oración</th>
+                <th>Lugar del Encuentro de Oración</th>
+                <th>Fecha del Encuentro de Oración</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
             <?php $i = 1; ?>
-            @foreach($registrosold as $reg)
+            @foreach($encuentros as $reg)
                 <tr>
                     <td>{{ $i }}</td>
-                    <td>{{ $reg->name_monitor }}</td>
-                    <td>{{ $reg->name_lastname }}</td>
-                    <td>{{ $reg->telephones }}</td>
-                    <td>{{ $reg->age }}</td>
-                    <td>{{ $reg->date_birthday}}</td>
-                    <td>{{ $reg->church }}</td>
                     <td>{{ $reg->name_departamento."-".$reg->nombre_ciudad }}</td>
-                    <td>{{ $reg->ministery }}</td>
-                    <td>{{ $reg->time_converted." ".$reg->name_tipotiempo }}</td>
-                    <td>{{ $reg->franja }}</td>
-                    <td>{{ $reg->email }}</td>
-                    <td>{{ $reg->ciudad_encuentro." Fecha Encuentro ".$reg->date_encuentro }}</td>
-
+                    <td>{{ $reg->date_encuentro }}</td>
                     <td>
-                        <a href="registerOld\edit\{{ $reg->idregisterold }}" class="btn btn-primary">
+                        <a href="monitor\edit\{{ $reg->idmonitor }}" class="btn btn-primary">
                             <span class="fas fa-fw fa-edit"></span>
                         </a>
                     </td>
                     <td>
-                        <a href="registerOld\confirmdestroy\{{ $reg->idregisterold }}" type="button" class="btn btn-danger">
+                        <a href="monitor\confirmdestroy\{{ $reg->idmonitor }}" type="button" class="btn btn-danger">
                             <span class="fas fa-fw fa-trash-alt"></span>
                         </a>
                     </td>
@@ -66,20 +45,8 @@
             <tr>
                 <th>N°</th>
                 <th>Monitor de Oración</th>
-                <th>Nombres y Apellidos</th>
-                <th>Telefonos</th>
-                <th>Edad</th>
-                <th>Fecha Nacimiento</th>
-                <th>Iglesia</th>
-                <th>Lugar</th>
-                <th>Ministerio</th>
-                <th>Tiempo Convertido</th>
-                <th>Franja</th>
-                <th>E-mail</th>
-                <th>Encuentro de Oración</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
-
             </tr>
         </tfoot>
     </table>
@@ -93,6 +60,10 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+    
+    
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
@@ -167,6 +138,7 @@
         }
 
     </style>
+
 @stop
 
 @section('js')
@@ -183,6 +155,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.colVis.min.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -212,13 +186,13 @@
             {
                 extend: 'excelHtml5',
                 exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+                    columns: [ 0, 1 ]
                 }
             },
             {
                 extend: 'pdf',
                 exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+                    columns: [ 0, 1 ]
                 }
             },
    

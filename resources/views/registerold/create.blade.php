@@ -15,7 +15,19 @@
 <div class="d-flex flex-row-reverse">
   <img src="{{ asset('img/LOGO1.png') }}" width="200" heigth="200"/>
 </div>
-
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <label for="idencuentro">Encuentro de Oración</label>
+<select class="form-control" id="idencuentro" name="idencuentro">
+  
+    <br>
+        <option value="0" selected>Seleccion un Encuentro de Oración</option>
+        @for ($i = 0; $i < count($encuentros); $i++)
+            <option value="{{$encuentros[$i]['idencuentro']}}">{{$encuentros[$i]['nombre_ciudad']." Fecha del Encuentro ".$encuentros[$i]['date_encuentro']}}</option>
+        @endfor
+</select>
+</div>
+</div>
 
 <div class="form-row">
 
@@ -199,11 +211,13 @@
           $("#idplace").select2();
           $('#idtipotiempo').val(<?php echo old('idtipotiempo') ?>);
           $("#idtipotiempo").select2();
+          $('#idencuentro').val(<?php echo old('idencuentro') ?>);
+          $("#idencuentro").select2();
 
           $("#date_birthday").pickadate({
             selectYears: true,
             selectMonths: true,
-            selectYears: 50,
+            selectYears: 200,
             weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],            
             monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
             monthsShort: ['En', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],

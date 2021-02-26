@@ -8,6 +8,7 @@ use App\Models\departamentos as departamentos;
 use App\Models\ciudades as ciudades;
 use App\Models\monitores as monitores;
 use App\Models\tipoTiempo as tipoTiempo;
+use App\Models\encuentros as encuentros;
 
 class RegisterOldController extends Controller
 {
@@ -19,13 +20,18 @@ class RegisterOldController extends Controller
     public function index()
     {
         $RegisterOld = RegisterOld::
-        join('ciudades', 'ciudades.id_ciudad', '=', 'register_olds.idplace')
+         join('encuentros', 'register_olds.idencuentro', '=', 'encuentros.idencuentro')
+        ->join('ciudades as c1', 'encuentros.place_encuentro', '=', 'c1.id_ciudad')
+        ->join('departamentos as d1', 'c1.cod_departamento', '=', 'd1.cod_departamento')
+        ->join('ciudades', 'ciudades.id_ciudad', '=', 'register_olds.idplace')
         ->join('departamentos', 'departamentos.cod_departamento', '=', 'ciudades.cod_departamento')
         ->join('monitores', 'monitores.idmonitor', '=', 'register_olds.idmonitor')
         ->join('tipo_tiempos', 'tipo_tiempos.idtipotiempo', '=', 'register_olds.idtipotiempo')
         ->where('borrado','=','0')
+        ->selectRaw('date(encuentros.date_encuentro) as date_encuentro,c1.nombre_ciudad as ciudad_encuentro,d1.name_departamento as departamento_encuentro,register_olds.idmonitor,register_olds.name_lastname,register_olds.telephones,register_olds.age,register_olds.date_birthday,register_olds.church,register_olds.idplace,register_olds.ministery,register_olds.time_converted,register_olds.idtipotiempo,register_olds.franja,register_olds.email,register_olds.idencuentro,departamentos.name_departamento,ciudades.nombre_ciudad,monitores.name_monitor,tipo_tiempos.name_tipotiempo,register_olds.idregisterold')
         ->get();
-     
+
+    
         return view('registerold.index',[
             'registrosold'=>$RegisterOld,
         ]);
@@ -38,6 +44,9 @@ class RegisterOldController extends Controller
      */
     public function create()
     {
+        $encuentros = encuentros::join('ciudades', 'ciudades.id_ciudad', '=', 'encuentros.place_encuentro')->join('departamentos', 'ciudades.cod_departamento', '=', 'departamentos.cod_departamento')->selectRaw('date(encuentros.date_encuentro) as date_encuentro,ciudades.nombre_ciudad,departamentos.name_departamento,encuentros.idencuentro')->get();
+        $encuentros = json_decode(json_encode($encuentros), true);
+
         $citys = departamentos::
         join('ciudades', 'ciudades.cod_departamento', '=', 'departamentos.cod_departamento')
         ->get();
@@ -53,7 +62,8 @@ class RegisterOldController extends Controller
         return view('registerold.create',[
             'citys' =>$citys,
             'monitores' =>$monitores,
-            'tipoTiempo' =>$tipoTiempo
+            'tipoTiempo' =>$tipoTiempo,
+            'encuentros' =>$encuentros
         ]);
     }
 
@@ -69,7 +79,6 @@ class RegisterOldController extends Controller
   
         $request->validate([
             'name_lastname' => 'required',
-            'email' => 'email:rfc,dns',
             'age' => 'numeric|max:100',
             'time_converted' => 'numeric',
             'telephones' => 'numeric',
@@ -77,7 +86,6 @@ class RegisterOldController extends Controller
         ],
         [
             'name_lastname.required' => 'El Nombre y Apellido Es Obligatorio',
-            'email.email' => 'El correo debe tener formato correo@email.com',
             'age.numeric' => 'El campo edad debe ser numerico',
             'time_converted.numeric' => 'El campo Tiempo Convertido debe ser numerico',
             'telephones.numeric' => 'El campo Telefonos debe ser numerico',
@@ -87,6 +95,7 @@ class RegisterOldController extends Controller
         
 
         $registerOld = new RegisterOld();
+        $registerOld->idencuentro = $request->get('idencuentro');
         $registerOld->idmonitor = $request->get('idmonitor');
         $registerOld->name_lastname = $request->get('name_lastname');
         $registerOld->telephones = $request->get('telephones');
@@ -130,6 +139,10 @@ class RegisterOldController extends Controller
      */
     public function edit($id)
     {
+
+        $encuentros = encuentros::join('ciudades', 'ciudades.id_ciudad', '=', 'encuentros.place_encuentro')->join('departamentos', 'ciudades.cod_departamento', '=', 'departamentos.cod_departamento')->selectRaw('date(encuentros.date_encuentro) as date_encuentro,ciudades.nombre_ciudad,departamentos.name_departamento,encuentros.idencuentro')->get();
+        $encuentros = json_decode(json_encode($encuentros), true);
+
         $citys = departamentos::
         join('ciudades', 'ciudades.cod_departamento', '=', 'departamentos.cod_departamento')
         ->get();
@@ -149,7 +162,8 @@ class RegisterOldController extends Controller
             'citys' =>$citys,
             'monitores' =>$monitores,
             'tipoTiempo' =>$tipoTiempo,
-            'registerOld' =>$registerOld
+            'registerOld' =>$registerOld,
+            'encuentros' => $encuentros
         ]);
     }
 
@@ -165,7 +179,6 @@ class RegisterOldController extends Controller
 
         $request->validate([
             'name_lastname' => 'required',
-            'email' => 'email:rfc,dns',
             'age' => 'numeric|max:100',
             'time_converted' => 'numeric',
             'telephones' => 'numeric',
@@ -173,7 +186,6 @@ class RegisterOldController extends Controller
             ],
             [
                 'name_lastname.required' => 'El Nombre y Apellido Es Obligatorio',
-                'email.email' => 'El correo debe tener formato correo@email.com',
                 'age.numeric' => 'El campo edad debe ser numerico',
                 'time_converted.numeric' => 'El campo Tiempo Convertido debe ser numerico',
                 'telephones.numeric' => 'El campo Telefonos debe ser numerico',
@@ -182,6 +194,7 @@ class RegisterOldController extends Controller
 
 
         $registerOld = registerOld::find($id);
+        $registerOld->idencuentro = $request->get('idencuentro');
         $registerOld->idmonitor = $request->get('idmonitor');
         $registerOld->name_lastname = $request->get('name_lastname');
         $registerOld->telephones = $request->get('telephones');

@@ -12,6 +12,20 @@
 @csrf
 
 <div class="form-row">
+  <div class="form-group col-md-6">
+    <label for="idencuentro">Encuentro de Oración</label>
+<select class="form-control" id="idencuentro" name="idencuentro">
+  
+    <br>
+        <option value="0" selected>Seleccion un Encuentro de Oración</option>
+        @for ($i = 0; $i < count($encuentros); $i++)
+            <option value="{{$encuentros[$i]['idencuentro']}}">{{$encuentros[$i]['nombre_ciudad']." Fecha del Encuentro ".$encuentros[$i]['date_encuentro']}}</option>
+        @endfor
+</select>
+</div>
+</div>
+
+<div class="form-row">
 
   <div class="form-group col-md-6">
     <label for="idmonitor">Monitor de Oración</label>
@@ -162,7 +176,7 @@
             <span class="fas fa-fw fa-plus"></span> Editar
         </button>
 
-        <a href="./" type="button" class="btn btn-secondary">
+        <a href="../" type="button" class="btn btn-secondary">
             <span class="fas fa-fw fa-times"></span> Cancelar
         </a>
   </div>
@@ -203,6 +217,9 @@
     <script>
         $(document).ready(function() {
 
+          $('#idencuentro').val(<?php echo $registerOld[0]['idencuentro'] ?>);
+          $("#idencuentro").select2();
+
           $('#idmonitor').val(<?php echo $registerOld[0]['idmonitor'] ?>);
           $("#idmonitor").select2();
           $('#idplace').val(<?php echo $registerOld[0]['idplace']  ?>);
@@ -216,7 +233,7 @@
             selectYears: 50,
             weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],            
             monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthsShort: ['En', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            monthsShort: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
             format: 'yyyy-mm-dd',
             formatSubmit: 'yyyy-mm-dd',
             labelMonthNext: 'Ir al proximo mes',

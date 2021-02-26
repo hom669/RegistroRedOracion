@@ -241,6 +241,12 @@ return [
             'label_color' => 'warning',
         ],
         [
+            'text'        => 'Registro Encuentros de Oración',
+            'url'         => 'encuentro',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'warning',
+        ],
+        [
             'text'        => 'Registro Hojas Antiguas',
             'url'         => 'registerOld',
             'icon'        => 'far fa-fw fa-file',
