@@ -1,0 +1,27 @@
+CREATE TABLE `encuentros` (
+  `idencuentro` bigint(20) NOT NULL AUTO_INCREMENT,
+  `place_encuentro` int(11) DEFAULT NULL,
+  `date_encuentro` datetime DEFAULT NULL,
+  PRIMARY KEY (`idencuentro`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+
+INSERT INTO redoracion.encuentros
+(idencuentro, place_encuentro, date_encuentro)
+VALUES(1, 489, '2011-12-02 00:00:00.000');
+
+ALTER TABLE redoracion.register_olds ADD idmonitor integer NULL;
+
+INSERT INTO redoracion.register_olds
+(idregisterold, idmonitor, name_lastname, telephones, age, date_birthday, church, idplace, ministery, time_converted, idtipotiempo, franja, email, created_at, updated_at, borrado, idencuentro)
+VALUES(1, 1, 'CECILIA CRISTANCHO PAEZ', '3144798596', '58', '1953-06-15', 'ASAMBLEAS DE DIOS', 489, NULL, '20', 1, 'noche', 'sin@gmail.com', '2021-02-25 23:33:19.000', '2021-02-25 23:33:19.000', 0, 1);
+INSERT INTO redoracion.register_olds
+(idregisterold, idmonitor, name_lastname, telephones, age, date_birthday, church, idplace, ministery, time_converted, idtipotiempo, franja, email, created_at, updated_at, borrado, idencuentro)
+VALUES(2, 1, 'LUIS ANGEL SOSA', '3114811951', '60', '1951-06-05', 'ASAMBLEAS DE DIOS', 489, NULL, '5', 1, '5 AM', NULL, '2021-02-25 23:57:03.000', '2021-02-26 01:31:27.000', 0, 1);
+INSERT INTO redoracion.register_olds
+(idregisterold, idmonitor, name_lastname, telephones, age, date_birthday, church, idplace, ministery, time_converted, idtipotiempo, franja, email, created_at, updated_at, borrado, idencuentro)
+VALUES(3, 1, 'MERY JOHANNA TOVAR GARZON', '3102546341', '25', '1986-01-23', 'ALIANZA CRISTIANA', 358, 'MAESTRA DE NIÑOS, UJIER', '6', 1, NULL, NULL, '2021-02-26 00:00:42.000', '2021-02-26 00:00:42.000', 0, 1);
+INSERT INTO redoracion.register_olds
+(idregisterold, idmonitor, name_lastname, telephones, age, date_birthday, church, idplace, ministery, time_converted, idtipotiempo, franja, email, created_at, updated_at, borrado, idencuentro)
+VALUES(4, 1, 'OSCAR FABIAN ANDRADE DIAZ', '3118256163', '25', '1986-05-11', 'ALIANZA CRISTIANA', 358, 'JUVENIL,G12', '10', 0, NULL, NULL, '2021-02-26 14:13:00.000', '2021-02-26 14:13:00.000', 0, 1);
+
