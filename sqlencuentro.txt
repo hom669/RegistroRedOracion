@@ -24,4 +24,13 @@ VALUES(3, 1, 'MERY JOHANNA TOVAR GARZON', '3102546341', '25', '1986-01-23', 'ALI
 INSERT INTO redoracion.register_olds
 (idregisterold, idmonitor, name_lastname, telephones, age, date_birthday, church, idplace, ministery, time_converted, idtipotiempo, franja, email, created_at, updated_at, borrado, idencuentro)
 VALUES(4, 1, 'OSCAR FABIAN ANDRADE DIAZ', '3118256163', '25', '1986-05-11', 'ALIANZA CRISTIANA', 358, 'JUVENIL,G12', '10', 0, NULL, NULL, '2021-02-26 14:13:00.000', '2021-02-26 14:13:00.000', 0, 1);
+INSERT INTO redoracion.register_olds
+(idregisterold, idmonitor, name_lastname, telephones, age, date_birthday, church, idplace, ministery, time_converted, idtipotiempo, franja, email, created_at, updated_at, borrado, idencuentro)
+VALUES(5, 1, 'ANA SABRINCORNE', '3124247112', '63', '1948-09-22', 'MANANTIAL', 149, NULL, '0', 1, '4-6 MAÑANA', NULL, '2021-02-26 17:30:00.000', '2021-02-26 17:30:00.000', 0, 1);
+INSERT INTO redoracion.register_olds
+(idregisterold, idmonitor, name_lastname, telephones, age, date_birthday, church, idplace, ministery, time_converted, idtipotiempo, franja, email, created_at, updated_at, borrado, idencuentro)
+VALUES(6, 1, 'LUIS EMIGNDIO CARDENAS CASTELLANOS', '3158791221-3112521241', '50', '1961-06-27', 'CUADRANGULAR', 852, NULL, '1', 1, '4 AM', NULL, '2021-02-26 17:34:02.000', '2021-02-26 17:34:02.000', 0, 1);
+INSERT INTO redoracion.register_olds
+(idregisterold, idmonitor, name_lastname, telephones, age, date_birthday, church, idplace, ministery, time_converted, idtipotiempo, franja, email, created_at, updated_at, borrado, idencuentro)
+VALUES(7, 1, 'OSCAR FABIAN ANDRADE DIAZ', '3118256163', '25', '1986-05-11', 'ALIANZA CRISTIANA', 358, 'JUVENIL, G12', '10', 1, NULL, NULL, '2021-02-26 17:36:26.000', '2021-02-26 17:36:26.000', 0, 1);
 

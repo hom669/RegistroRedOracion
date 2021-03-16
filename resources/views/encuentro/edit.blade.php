@@ -8,7 +8,7 @@
 
 @section('content')
 
-<form action="store" method="POST">
+<form action="..\update\{{$encuentro[0]['idencuentro']}}" method="POST">
 @csrf
 
 <div class="d-flex flex-row-reverse">

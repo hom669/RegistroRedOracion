@@ -23,13 +23,15 @@ class RegisterOldController extends Controller
          join('encuentros', 'register_olds.idencuentro', '=', 'encuentros.idencuentro')
         ->join('ciudades as c1', 'encuentros.place_encuentro', '=', 'c1.id_ciudad')
         ->join('departamentos as d1', 'c1.cod_departamento', '=', 'd1.cod_departamento')
-        ->join('ciudades', 'ciudades.id_ciudad', '=', 'register_olds.idplace')
-        ->join('departamentos', 'departamentos.cod_departamento', '=', 'ciudades.cod_departamento')
+        ->leftJoin('ciudades', 'ciudades.id_ciudad', '=', 'register_olds.idplace')
+        ->leftJoin('departamentos', 'departamentos.cod_departamento', '=', 'ciudades.cod_departamento')
         ->join('monitores', 'monitores.idmonitor', '=', 'register_olds.idmonitor')
         ->join('tipo_tiempos', 'tipo_tiempos.idtipotiempo', '=', 'register_olds.idtipotiempo')
         ->where('borrado','=','0')
-        ->selectRaw('date(encuentros.date_encuentro) as date_encuentro,c1.nombre_ciudad as ciudad_encuentro,d1.name_departamento as departamento_encuentro,register_olds.idmonitor,register_olds.name_lastname,register_olds.telephones,register_olds.age,register_olds.date_birthday,register_olds.church,register_olds.idplace,register_olds.ministery,register_olds.time_converted,register_olds.idtipotiempo,register_olds.franja,register_olds.email,register_olds.idencuentro,departamentos.name_departamento,ciudades.nombre_ciudad,monitores.name_monitor,tipo_tiempos.name_tipotiempo,register_olds.idregisterold')
+        ->selectRaw('date(encuentros.date_encuentro) as date_encuentro,c1.nombre_ciudad as ciudad_encuentro,d1.name_departamento as departamento_encuentro,register_olds.idmonitor,register_olds.name_lastname,register_olds.telephones,register_olds.age,register_olds.date_birthday,register_olds.church,register_olds.idplace,register_olds.ministery,register_olds.time_converted,register_olds.idtipotiempo,register_olds.franja,register_olds.email,register_olds.idencuentro,departamentos.name_departamento,ciudades.nombre_ciudad,monitores.name_monitor,tipo_tiempos.name_tipotiempo,register_olds.idregisterold,register_olds.place')
         ->get();
+
+        //dd($RegisterOld);
 
     
         return view('registerold.index',[
@@ -78,17 +80,10 @@ class RegisterOldController extends Controller
 
   
         $request->validate([
-            'name_lastname' => 'required',
-            'age' => 'numeric|max:100',
-            'time_converted' => 'numeric',
-            'telephones' => 'numeric',
-
+            'name_lastname' => 'required'
         ],
         [
             'name_lastname.required' => 'El Nombre y Apellido Es Obligatorio',
-            'age.numeric' => 'El campo edad debe ser numerico',
-            'time_converted.numeric' => 'El campo Tiempo Convertido debe ser numerico',
-            'telephones.numeric' => 'El campo Telefonos debe ser numerico',
         ]
     );
 
@@ -100,9 +95,10 @@ class RegisterOldController extends Controller
         $registerOld->name_lastname = $request->get('name_lastname');
         $registerOld->telephones = $request->get('telephones');
         $registerOld->age = $request->get('age');
-        $registerOld->date_birthday = $request->get('date_birthday');
+        $registerOld->date_birthday = $request->get('year_birthday')."-".$request->get('month_birthday')."-".$request->get('day_birthady');
         $registerOld->church = $request->get('church');
-        $registerOld->idplace = $request->get('idplace');
+        //$registerOld->idplace = $request->get('idplace');
+        $registerOld->place = $request->get('place');
         $registerOld->ministery = $request->get('ministery');
         $registerOld->time_converted = $request->get('time_converted');
         $registerOld->idtipotiempo = $request->get('idtipotiempo');
@@ -178,17 +174,11 @@ class RegisterOldController extends Controller
     {
 
         $request->validate([
-            'name_lastname' => 'required',
-            'age' => 'numeric|max:100',
-            'time_converted' => 'numeric',
-            'telephones' => 'numeric',
+            'name_lastname' => 'required'
 
             ],
             [
-                'name_lastname.required' => 'El Nombre y Apellido Es Obligatorio',
-                'age.numeric' => 'El campo edad debe ser numerico',
-                'time_converted.numeric' => 'El campo Tiempo Convertido debe ser numerico',
-                'telephones.numeric' => 'El campo Telefonos debe ser numerico',
+                'name_lastname.required' => 'El Nombre y Apellido Es Obligatorio'
             ]
         );
 
@@ -199,9 +189,10 @@ class RegisterOldController extends Controller
         $registerOld->name_lastname = $request->get('name_lastname');
         $registerOld->telephones = $request->get('telephones');
         $registerOld->age = $request->get('age');
-        $registerOld->date_birthday = $request->get('date_birthday');
+        $registerOld->date_birthday = $request->get('year_birthday')."-".$request->get('month_birthday')."-".$request->get('day_birthady');
         $registerOld->church = $request->get('church');
-        $registerOld->idplace = $request->get('idplace');
+        //$registerOld->idplace = $request->get('idplace');
+        $registerOld->place = $request->get('place');
         $registerOld->ministery = $request->get('ministery');
         $registerOld->time_converted = $request->get('time_converted');
         $registerOld->idtipotiempo = $request->get('idtipotiempo');

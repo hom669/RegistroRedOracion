@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Registros Antiguos Red Oración')
+@section('title', 'Registros Encuentro de Oración')
 
 @section('content_header')
-    <h1>Administracion de Registros Monitores Red de Oración</h1>
+    <h1>Administracion de Registros Encuentro de Oración</h1>
 @stop
 <?php //dd($registrosold);?>
 @section('content')
-<a href="encuentro\create" class="btn btn-success">Crear Nuevo Monitor de Oración</a><br><br>
+<a href="encuentro\create" class="btn btn-success">Crear Nuevo Encuentro de Oración</a><br><br>
 <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
         <thead>
             <tr>
@@ -26,12 +26,12 @@
                     <td>{{ $reg->name_departamento."-".$reg->nombre_ciudad }}</td>
                     <td>{{ $reg->date_encuentro }}</td>
                     <td>
-                        <a href="monitor\edit\{{ $reg->idmonitor }}" class="btn btn-primary">
+                        <a href="encuentro\edit\{{ $reg->idencuentro }}" class="btn btn-primary">
                             <span class="fas fa-fw fa-edit"></span>
                         </a>
                     </td>
                     <td>
-                        <a href="monitor\confirmdestroy\{{ $reg->idmonitor }}" type="button" class="btn btn-danger">
+                        <a href="encuentro\confirmdestroy\{{ $reg->idencuentro }}" type="button" class="btn btn-danger">
                             <span class="fas fa-fw fa-trash-alt"></span>
                         </a>
                     </td>

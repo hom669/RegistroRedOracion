@@ -1,3 +1,11 @@
+<?php 
+$fechacumple = $registerOld[0]['date_birthday'];
+$fechaseparada = explode('-', $fechacumple);
+
+$año = $fechaseparada[0];
+$mes = $fechaseparada[1];
+$dia = $fechaseparada[2];
+?>
 @extends('adminlte::page')
 
 @section('title', 'Solicitudes')
@@ -84,7 +92,20 @@
 
   <div class="form-group col-md-6">
     <label for="date_birthday">Fecha Nacimiento</label>
-    <input type="text" class="date form-control" id="date_birthday" name="date_birthday" value="{{$registerOld[0]['date_birthday']}}" placeholder="Fecha Nacimiento">
+
+    <div class="form-row">
+      <div class="col">
+        <input type="number" class="date form-control" id="day_birthady" name="day_birthady" value="{{ $dia }}" placeholder="DIA">
+      </div>
+      <div class="col">
+        <input type="number" class="date form-control" id="month_birthday" name="month_birthday" value="{{ $mes}}" placeholder="MES">        
+      </div>
+      <div class="col">
+        <input type="number" class="date form-control" id="year_birthday" name="year_birthday" value="{{ $año }}" placeholder="AÑO">
+      </div>
+    </div>
+    
+    
   </div>
 
   <div class="form-group col-md-6">
@@ -97,8 +118,9 @@
 <div class="form-row">
 
   <div class="form-group col-md-6">
-    <label for="idplace">Lugar</label>
-    <select class="form-control" id="idplace" name="idplace">
+    <label for="place">Lugar</label>
+    <input type="text" class="form-control" id="place" name="place" value="{{ $registerOld[0]['place'] }}"  placeholder="Iglesia">
+    <br>    <!-- <select class="form-control" id="idplace" name="idplace">
       <option value="0" selected>Seleccion un Lugar</option>
         @for ($i = 0; $i < count($citys); $i++)
         <?php if($citys[$i]['id_ciudad'] == $registerOld[0]['idplace']){
@@ -112,7 +134,7 @@
         } ?>
             
         @endfor
-    </select>
+    </select> -->
 
   </div>
 

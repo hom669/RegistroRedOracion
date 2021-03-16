@@ -39,7 +39,7 @@
                     <td>{{ $reg->age }}</td>
                     <td>{{ $reg->date_birthday}}</td>
                     <td>{{ $reg->church }}</td>
-                    <td>{{ $reg->name_departamento."-".$reg->nombre_ciudad }}</td>
+                    <td>{{ $reg->name_departamento."-".$reg->nombre_ciudad."".$reg->place }}</td>
                     <td>{{ $reg->ministery }}</td>
                     <td>{{ $reg->time_converted." ".$reg->name_tipotiempo }}</td>
                     <td>{{ $reg->franja }}</td>

@@ -70,7 +70,7 @@
 
   <div class="form-group col-md-6">
     <label for="age">Edad</label>
-    <input type="text" class="form-control" id="age" name="age" value="{{ old('age') }}" placeholder="Edad">
+    <input type="number" class="form-control" id="age" name="age" value="{{ old('age') }}" placeholder="Edad">
     @error('age')
       <br>
       <div class="alert alert-danger">{{ $message }}</div>
@@ -83,7 +83,20 @@
 
   <div class="form-group col-md-6">
     <label for="date_birthday">Fecha Nacimiento</label>
-    <input type="text" class="date form-control" id="date_birthday" name="date_birthday" value="{{ old('date_birthday') }}" placeholder="Fecha Nacimiento">
+
+    <div class="form-row">
+      <div class="col">
+        <input type="number" class="date form-control" id="day_birthady" name="day_birthady" value="{{ old('day_birthady') }}" placeholder="DIA">
+      </div>
+      <div class="col">
+        <input type="number" class="date form-control" id="month_birthday" name="month_birthday" value="{{ old('date_birthday') }}" placeholder="MES">        
+      </div>
+      <div class="col">
+        <input type="number" class="date form-control" id="year_birthday" name="year_birthday" value="{{ old('date_birthday') }}" placeholder="AÑO">
+      </div>
+    </div>
+    
+    
   </div>
 
   <div class="form-group col-md-6">
@@ -96,16 +109,17 @@
 <div class="form-row">
 
   <div class="form-group col-md-6">
-    <label for="idplace">Lugar</label>
+    <label for="place">Lugar</label>
+    <input type="text" class="form-control" id="place" name="place" value="{{ old('place') }}"  placeholder="Iglesia">
     <br>
-    <div class="col-xs-10">
+    <!-- <div class="col-xs-10">
     <select class="form-control" id="idplace" name="idplace">
         <option value="0" selected>Seleccion un Lugar</option>
         @for ($i = 0; $i < count($citys); $i++)
             <option value="{{$citys[$i]['id_ciudad']}}">{{$citys[$i]['name_departamento']."-".$citys[$i]['nombre_ciudad']}}</option>
         @endfor
     </select>
-  </div>
+  </div> -->
 
   </div>
 
@@ -121,7 +135,7 @@
 
   <div class="form-group col-md-6">
     <label for="time_converted">Tiempo Convertido</label>
-    <input type="text" class="form-control" id="time_converted" name="time_converted" value="{{old('time_converted')}}" placeholder="Tiempo Compartido">
+    <input type="number" min="0" class="form-control" id="time_converted" name="time_converted" value="{{old('time_converted')}}" placeholder="Tiempo Compartido">
     @error('time_converted')
       <br>
       <div class="alert alert-danger">{{ $message }}</div>
@@ -133,7 +147,6 @@
     <br>
     <div class="col-xs-10">
     <select class="form-control" id="idtipotiempo" name="idtipotiempo" value="{{old('idtipotiempo')}}">
-      <option value="0" selected>Seleccion un Tipo de Tiempo</option>
       @for ($i = 0; $i < count($tipoTiempo); $i++)
           <option value="{{$tipoTiempo[$i]['idtipotiempo']}}">{{$tipoTiempo[$i]['name_tipotiempo']}}</option>
       @endfor

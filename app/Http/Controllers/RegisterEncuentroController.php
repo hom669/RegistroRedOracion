@@ -16,7 +16,7 @@ class RegisterEncuentroController extends Controller
      */
     public function index()
     {
-        $encuentros = encuentros::join('ciudades', 'ciudades.id_ciudad', '=', 'encuentros.place_encuentro')->join('departamentos', 'ciudades.cod_departamento', '=', 'departamentos.cod_departamento')->selectRaw('date(encuentros.date_encuentro) as date_encuentro,ciudades.nombre_ciudad,departamentos.name_departamento')->get();
+        $encuentros = encuentros::join('ciudades', 'ciudades.id_ciudad', '=', 'encuentros.place_encuentro')->join('departamentos', 'ciudades.cod_departamento', '=', 'departamentos.cod_departamento')->selectRaw('date(encuentros.date_encuentro) as date_encuentro,ciudades.nombre_ciudad,departamentos.name_departamento,encuentros.idencuentro')->get();
      
         return view('encuentro.index',[
             'encuentros'=>$encuentros,
@@ -83,7 +83,7 @@ class RegisterEncuentroController extends Controller
      */
     public function edit($id)
     {
-        $encuentro = encuentros::where('idmonitor','=',$id)->get();
+        $encuentro = encuentros::where('idencuentro','=',$id)->get();
         $encuentro = json_decode(json_encode($encuentro), true);
 
         $citys = departamentos::
@@ -109,10 +109,10 @@ class RegisterEncuentroController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $encuentro = encuentro::find($id);
+        $encuentro = encuentros::find($id);
         $encuentro->date_encuentro = $request->get('date_encuentro');
-        $encuentro->idplace = $request->get('idplace');
-        if($monitor->save()){
+        $encuentro->place_encuentro = $request->get('idplace');
+        if($encuentro->save()){
             $msg = "Registro Actualizdo Correctamente";
         }else{
             $msg = "Registro No Actualizado Correctamente";
