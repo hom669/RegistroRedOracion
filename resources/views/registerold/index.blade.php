@@ -5,10 +5,12 @@
 @section('content_header')
     <h1>Administracion de Registros Antiguos</h1>
 @stop
-<?php //dd($registrosold);?>
+<?php
+//dd($registrosold);
+?>
 @section('content')
-<a href="registerOld\create" class="btn btn-success">Crear Nuevo Registro Antiguos</a><br><br>
-<table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+    <a href="registerOld\create" class="btn btn-success">Crear Nuevo Registro Antiguos</a><br><br>
+    {{-- <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
         <thead>
             <tr>
                 <th>N°</th>
@@ -30,7 +32,7 @@
         </thead>
         <tbody>
             <?php $i = 1; ?>
-            @foreach($registrosold as $reg)
+            @foreach ($registrosold as $reg)
                 <tr>
                     <td>{{ $i }}</td>
                     <td>{{ $reg->name_monitor }}</td>
@@ -82,22 +84,36 @@
 
             </tr>
         </tfoot>
-    </table>
+    </table> --}}
+
+    {{-- <div class="example-wrapper">
+        <div class="grid-wrapper">
+            <div id="myGrid" class="ag-theme-alpine" style="width: 1200px; height:800px;">
+            </div>
+        </div>
+    </div> --}}
+
+    <div class="example-wrapper">
+        <div class="example-header">
+            <input type="text" id="filter-text-box" placeholder="Buscar..." oninput="onFilterTextBoxChanged()">
+        </div>
+        <div id="myGrid" class="ag-theme-alpine" style="width: 1200px; height:800px;">
+        </div>
+    </div>
 @stop
 
 @section('css')
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <style>
-        .dt-button.buttons-csv.buttons-html5{
+        .dt-button.buttons-csv.buttons-html5 {
             display: inline-block;
             font-weight: 400;
             color: #212529;
@@ -120,7 +136,7 @@
             box-shadow: none;
         }
 
-        .dt-button.buttons-excel.buttons-html5{
+        .dt-button.buttons-excel.buttons-html5 {
             display: inline-block;
             font-weight: 400;
             color: #212529;
@@ -143,7 +159,7 @@
             box-shadow: none;
         }
 
-        .dt-button.buttons-pdf.buttons-html5{
+        .dt-button.buttons-pdf.buttons-html5 {
             display: inline-block;
             font-weight: 400;
             color: #212529;
@@ -170,64 +186,265 @@
 @stop
 
 @section('js')
-    <script src="{{ 'js/app.js'}}" defer></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+    <script src="{{ 'js/app.js' }}" defer></script>
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#example').DataTable({
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
+
+    <script type="text/javascript" charset="utf-8">
+        // specify the columns
+        var filterParams = {
+            comparator: function(filterLocalDateAtMidnight, cellValue) {
+                var dateAsString = cellValue;
+                if (dateAsString == null) return -1;
+                var dateParts = dateAsString.split('/');
+                var cellDate = new Date(
+                    Number(dateParts[2]),
+                    Number(dateParts[1]) - 1,
+                    Number(dateParts[0])
+                );
+
+                if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
+                    return 0;
+                }
+
+                if (cellDate < filterLocalDateAtMidnight) {
+                    return -1;
+                }
+
+                if (cellDate > filterLocalDateAtMidnight) {
+                    return 1;
+                }
+            },
+            // browserDatePicker: true,
+        };
+
+        var columnDefs = [   
+            {
+                field: 'idregisterold',
+                headerName: 'Editar',
+                cellRenderer: function(params) {
+                    let keyData = params.data.idregisterold;
+                    let newLink = `<a href="registerOld\\edit\\${keyData}" class="btn btn-primary">
+                            <span class="fas fa-fw fa-edit"></span>
+                        </a>`;
+                    return newLink;
                 },
-                dom: 'Bfrtip',
-                buttons: [
-            {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
-                }
+                flex: 1,
             },
             {
-                extend: 'pdf',
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
-                }
+                field: 'idregisterold',
+                headerName: 'Eliminar',
+                cellRenderer: function(params) {
+                    let keyData = params.data.idregisterold;
+                    let newLink = ` <a href="registerOld\\confirmdestroy\\${keyData}" type="button" class="btn btn-danger">
+                            <span class="fas fa-fw fa-trash-alt"></span>
+                        </a>`;
+                    return newLink;
+                },
+                flex: 1,
             },
-   
-        ]
- 
+            
+            {
+                headerName: "Fecha Encuentro",
+                field: "date_encuentro",
+                filter: 'agTextColumnFilter'
+            },
+            {
+                headerName: "Ciudad Encuentro",
+                field: "ciudad_encuentro",
+                filter: 'agTextColumnFilter'
+            },
+            {
+                headerName: "Departamento Encuentro",
+                field: "departamento_encuentro",
+                filter: 'agTextColumnFilter'
+            },
+            {
+                headerName: "Nombre Monitor",
+                field: "name_monitor",
+                filter: 'agTextColumnFilter'
+            },
+            {
+                headerName: "Nombre Persona",
+                field: "name_lastname",
+                filterType: 'text',
+                filter: 'agTextColumnFilter'
+            },
+            {
+                headerName: "Telefono",
+                field: "telephones",
+                filter: 'agTextColumnFilter'
+            },
+            {
+                headerName: "Edad",
+                field: "age",
+                filter: 'agNumberColumnFilter'
+            },
+            {
+                headerName: "Fecha Cumpleaños",
+                field: "date_birthday",
+                filters: filterParams
+            },
+            {
+                headerName: "Iglesia",
+                field: "church",
+                filter: 'agTextColumnFilter'
+            },
+            {
+                headerName: "Ministerio",
+                field: "ministery",
+                filter: 'agTextColumnFilter'
+            },
+            {
+                headerName: "Tiempo Converito",
+                field: "time_converted",
+                filter: 'agNumberColumnFilter'
+            },
+            {
+                headerName: "Lugar Residencia",
+                field: "place",
+                filter: 'agTextColumnFilter'
+            }
+            
+        ];
+        var autoGroupColumnDef = {
+            headerName: "Model",
+            field: "model",
+            cellRenderer: 'agGroupCellRenderer',
+            cellRendererParams: {
+                checkbox: true
+            }
+        }
+
+        // let the grid know which columns and what data to use
+        var gridOptions = {
+            columnDefs: columnDefs,
+            defaultColDef: {
+                flex: 1,
+                minWidth: 150,
+                filter: true,
+                sortable: true,
+            },
+            enableSorting: true,
+            enableFilter: true,
+            autoGroupColumnDef: autoGroupColumnDef,
+            groupSelectsChildren: true,
+            rowSelection: 'multiple'
+        };
+
+        var savedFilterModel = null;
+
+        function clearFilters() {
+            gridOptions.api.setFilterModel(null);
+        }
+
+        function saveFilterModel() {
+            savedFilterModel = gridOptions.api.getFilterModel();
+
+            var keys = Object.keys(savedFilterModel);
+            var savedFilters = keys.length > 0 ? keys.join(', ') : '(none)';
+
+            document.querySelector('#savedFilters').innerHTML = savedFilters;
+        }
+
+        function restoreFilterModel() {
+            gridOptions.api.setFilterModel(savedFilterModel);
+        }
+
+        function restoreFromHardCoded() {
+            var hardcodedFilter = {
+                country: {
+                    type: 'set',
+                    values: ['Ireland', 'United States'],
+                },
+                age: {
+                    type: 'lessThan',
+                    filter: '30'
+                },
+                athlete: {
+                    type: 'startsWith',
+                    filter: 'Mich'
+                },
+                date: {
+                    type: 'lessThan',
+                    dateFrom: '2010-01-01'
+                },
+            };
+
+            gridOptions.api.setFilterModel(hardcodedFilter);
+        }
+
+        function destroyFilter() {
+            gridOptions.api.destroyFilter('athlete');
+        }
+
+
+        function onFilterTextBoxChanged() {
+            gridOptions.api.setQuickFilter(document.getElementById('filter-text-box').value);
+        }
+
+        function onPrintQuickFilterTexts() {
+            gridOptions.api.forEachNode(function(rowNode, index) {
+                console.log('Row ' + index + ' quick filter text is ' + rowNode.quickFilterAggregateText);
+            });
+        }
+
+        function onQuickFilterTypeChanged() {
+            var rbCache = document.querySelector('#cbCache');
+            var cacheActive = rbCache.checked;
+            console.log('using cache = ' + cacheActive);
+            gridOptions.cacheQuickFilter = cacheActive;
+
+            // set row data again, so to clear out any cache that might of existed
+            gridOptions.api.setRowData(createRowData());
+        }
+
+        // setup the grid after the page has finished loading
+        document.addEventListener('DOMContentLoaded', function() {
+            var gridDiv = document.querySelector('#myGrid');
+            new agGrid.Grid(gridDiv, gridOptions);
+
+            agGrid.simpleHttpRequest({
+                    url: 'https://localhost/RegistroRedOracion/public/api/get-registers'
+                })
+                .then(function(data) {
+                    gridOptions.api.setRowData(data);
+                });
         });
 
-    });
+        /* var autoGroupColumnDef = {
+                            headerName: "Model",
+                            field: "model",
+                            cellRenderer:'agGroupCellRenderer',
+                            cellRendererParams: {
+                                checkbox: true
+                            }
+                        }
+
+                        // let the grid know which columns and what data to use
+                        var gridOptions = {
+                            columnDefs: columnDefs,
+                            enableSorting: true,
+                            enableFilter: true,
+                            autoGroupColumnDef: autoGroupColumnDef,
+                            groupSelectsChildren: true,
+                            rowSelection: 'multiple'
+                        };
+
+                        // lookup the container we want the Grid to use
+                        var eGridDiv = document.querySelector('#myGrid');
+
+                        // create the grid passing in the div to use together with the columns & data we want to use
+                        new agGrid.Grid(eGridDiv, gridOptions);
+
+                        fetch('http://127.0.0.1:8000/api/get-registers').then(function(response) {
+                            return response.json();
+                        }).then(function(data) {
+                            gridOptions.api.setRowData(data);
+                        })
+         */
 
     </script>
-    
+
+
 @stop
