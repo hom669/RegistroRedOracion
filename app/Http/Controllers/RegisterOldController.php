@@ -29,6 +29,8 @@ class RegisterOldController extends Controller
         ->join('tipo_tiempos', 'tipo_tiempos.idtipotiempo', '=', 'register_olds.idtipotiempo')
         ->where('borrado','=','0')
         ->selectRaw('date(encuentros.date_encuentro) as date_encuentro,c1.nombre_ciudad as ciudad_encuentro,d1.name_departamento as departamento_encuentro,register_olds.idmonitor,register_olds.name_lastname,register_olds.telephones,register_olds.age,register_olds.date_birthday,register_olds.church,register_olds.idplace,register_olds.ministery,register_olds.time_converted,register_olds.idtipotiempo,register_olds.franja,register_olds.email,register_olds.idencuentro,departamentos.name_departamento,ciudades.nombre_ciudad,monitores.name_monitor,tipo_tiempos.name_tipotiempo,register_olds.idregisterold,register_olds.place')
+        ->orderBy('register_olds.idregisterold', 'DESC')
+        ->limit(20)
         ->get();
 
         //dd($RegisterOld);
